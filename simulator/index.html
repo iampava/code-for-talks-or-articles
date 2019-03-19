@@ -1,0 +1,595 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="Techniques on how to optimize the performance of JavaScript intensive client-side apps.">
+            <link rel="icon" type="image/png" sizes="16x16" href="https://iampava.com/favicon-16x16.png">
+            <title>JavaScript: the fast and the furious</title>
+
+            <!-- SEO begin -->
+            <!-- FACEBOOK -->
+            <meta property="og:url" content="https://iampava.com/article" />
+            <meta property="og:title" content="JavaScript: the fast and the furious" />
+            <meta property="og:type" content="website" />
+            <meta property="og:description" content="Techniques on how to optimize the performance of JavaScript intensive client-side apps."https://iampava.com/>
+            <meta property="og:site_name" content="I AM PAVA" />
+            <meta property="og:locale" content="en_US" />
+            <meta property="og:image" content="https://iampava.com/dist/assets/javascript-fast-and-furious/cover_seo.jpg" />
+            <meta property="og:image:type" content="image/jpeg" />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
+
+            <!-- TWITTER -->
+            <meta name="twitter:image" content="https://iampava.com/dist/assets/javascript-fast-and-furious/cover_seo.jpg" />
+            <meta name="twitter:site" content="@aPavaloi" />
+            <meta name="twitter:creator" content="@aPavaloi" />
+            <meta name="twitter:card" content="summary_large_image" />
+
+            <!-- SEO-end -->
+        </head>
+        
+<body class="no-js">
+
+    
+            <header>
+            <div class="header__bar blue-bar"></div>
+            <div class="header__content">
+                <a href="https://iampava.com/">
+                    <img class="logo" height="65" src="https://iampava.com/dist/assets/images/pava.png" alt="I AM PAVA icon" /> 
+                </a>
+                <nav class="main-nav">
+                    <ul><li><a class="is--selected" href="https://iampava.com/blog">Blog </a></li><li><a href="https://iampava.com/services">Services </a></li><li><a href="https://iampava.com/events">Events </a></li><li><a href="https://iampava.com/about">About </a></li><li><a href="https://iampava.com/extras">Extras </a></li>
+                    </ul>
+                </nav>
+                <button type="button" class="btn btn--light" id="menuOpenBtn">
+                    <span> Menu </span>
+                    <span class = "hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
+            <nav class="header__mobile-menu">
+                <a href="https://iampava.com/" class="title"> I AM PAVA</a>
+                <ul><li><a class="is--selected" href="https://iampava.com/blog">Blog </a></li><li><a href="https://iampava.com/services">Services </a></li><li><a href="https://iampava.com/events">Events </a></li><li><a href="https://iampava.com/about">About </a></li><li><a href="https://iampava.com/extras">Extras </a></li>
+                </ul>
+                <button class="btn btn--light" id="menuCloseBtn">Close </button>
+            </nav>
+        </header>
+        
+<main class="article-page">
+    <section>
+        <h1 class="article__title">
+            <time class="article__meta" datetime="2019-01-21">21 JANUARY 2019</time>
+            JavaScript: the fast and the furious
+        </h1>
+        <h3 class="article__subtitle">
+            Techniques on how to optimize the performance of JavaScript intensive client-side apps.
+        </h3>
+
+        <figure class="media">
+            <picture>
+                <source srcset="
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_max.webp 4000w, 
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_med.webp 2000w,
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_low.webp 800w"
+                    sizes="100vw" type="image/webp">
+                <source srcset="
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_max.jpg 4000w,
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_med.jpg 2000w,
+                https://iampava.com/dist/assets/javascript-fast-and-furious/cover_low.jpg 800w"
+                    sizes="100vw" type="image/jpeg">
+                <img src="https://iampava.com/dist/assets/javascript-fast-and-furious/cover_med.jpg" alt="covers of magazines">
+            </picture>
+            <noscript>
+                <img src="https://iampava.com/dist/assets/javascript-fast-and-furious/cover_med.jpg" alt="covers of magazines">
+            </noscript>
+            <figcaption class="media__about">Photo by
+                <a href="https://unsplash.com/photos/iij-QvyRAnM">Guy Kawasaki</a>
+                on
+                <a href="https://unsplash.com">Unsplash </a>
+            </figcaption>
+        </figure>
+        <p>
+            Last summer I started getting increasingly interested in front-end performance. But I didn't want to just
+            read about making fast apps, I wanted to deep-dive and optimize something real! On the other hand, I was
+            finding it more and more annoying to manage the code-review process of my trainings. So, I
+            decided to chase both metaphorical rabbits and learn about performance by building the app that
+            would also make my trainings better...
+        </p>
+        <p>Over time this "chase" turned into something real: <a href="https://devdrive.io">DevDrive</a>. And since now
+            I'm pretty happy with the overall
+            performance, I decided to look back and write about what techniques helped me the most.</p>
+        <p class="tip tip--info">
+            DevDrive is written in React but all the ideas here can be applied to pretty much any usecase.
+        </p>
+    </section>
+    <section>
+        <div class="agenda raleway">
+            <h2 class="raleway"> Agenda</h2>
+            <ul>
+                <li><span class="nr-crt">#1</span><a href="#codeSplitting">Code splitting</a> </li>
+                <li><span class="nr-crt">#2</span><a href="#swPrecaching">Service Worker pre-caching</a> </li>
+                <li><span class="nr-crt">#3</span><a href="#bestTool">Best tool for the job</a> </li>
+                <li><span class="nr-crt">#4</span><a href="#ssr">Server Side Rendering</a></li>
+                <li><span class="nr-crt">#5</span><a href="#skeletonScreens">Skeleton screens</a></li>
+                <li><span class="nr-crt">#5</span><a href="#bonus">Bonus</a></li>
+            </ul>
+        </div>
+    </section>
+    <section id="codeSplitting">
+        <h2> Code splitting </h2>
+        <p>As you continue adding features to your app, your code-base will get bigger and bigger. At first nothing
+            will be very obvious, but as your app gets increasingly complex you'll surely notice that it takes longer
+            to start. And it kinda makes sense, because more JavaScript means longer times for download, parse, compile
+            and execution.</p>
+        <p> However, we surely don't need all that code from the get-go. To be more specific, if I'm building an
+            SPA, I don't need the code for the <strong>/settings</strong> page if I'm not even logged in yet. Or let's
+            say you build a one-page app with tons of functionalities, like an airline booking system. I don't use the
+            code that
+            searches for my flight until I have actually wrote my journey details and pressed <strong>Find</strong>.
+            But all this
+            code which I don't need still gets sent down the network and is parsed by the JavaScript engine. You might
+            argue that it's not executed and you'd be correct, but even so we're still wasting time which only gets
+            more and more
+            obvious on low-end devices.</p>
+        <p> The solution is to split our bundle in multiple, smaller files - usually called chunks - which we'll load
+            just when we need them, thus
+            having the overall app start much faster. </p>
+        <blockquote class="reader-quote">But, which parts do we split and which do we keep together?</blockquote>
+        <h3 class="topic">1) Route-based code splitting</h3>
+        <p> This is what pretty much every article and blog post out there recommends and I'll mention it here just in
+            case you never stumbled upon it. This technique applies to SPAs and suggests that we create one chunk per
+            route. So we'll have one for the <strong>/landing</strong> page, one for <strong>/home</strong>, one for
+            <strong>/settings</strong> and so on. This way,
+            when you navigate to the app we only send you the code for that particular page.
+        </p>
+        <p>I implemented this technique in <a href="https://devdrive.io">DevDrive</a> with the help of <a href="https://webpack.js.org/">webpack</a>
+            and the
+            <a href="https://github.com/jamiebuilds/react-loadable">React-loadable</a> package.
+            In the <span class="formatted">Pages.lazy.jsx</span> file I defines components that, when mounted,
+            request the real component from the network and then make the switch.
+        </p>
+        <pre><code class="javascript">import Loadable from 'react-loadable';
+
+// Landing page
+const LazyLandingPage = Loadable({
+    loader: () => import('./landing/Landing.page'),
+    modules: ['./landing/Landing.page'],
+    webpack: () => [require.resolveWeak('./landing/Landing.page')]
+});
+const LazyLanding =  props => &#60;LazyLandingPage {...props} />;
+
+// Home page
+const LazyHomePage = Loadable({
+    loader: () => import('./home/Home.page'),
+    modules: ['./home/Home.page'],
+    webpack: () => [require.resolveWeak('./home/Home.page')]
+});
+const LazyHome = props => &#60;LazyHomePage {...props} />;
+
+export {
+    LazyLanding,
+    LazyHome
+};</code></pre>
+        <br />
+        <p> Then, in my Routes definitions, I use those components instead of the real ones: </p>
+        <br />
+        <pre><code class="javascript">import {
+    LazyLanding,
+    LazyHome
+} from './pages/Pages.lazy';
+
+class Root extends React.Component {
+    render() {
+        return (
+            &#60;Switch>
+                &#60;Route exact path="https://iampava.com/" component={LazyLanding} />
+                &#60;Route exact path="https://iampava.com/home" component={LazyHome} />
+            &#60;/Switch>
+        )
+    }
+}</code></pre>
+        <p>
+            Angular and Vue support it out of the box and even if you're building your own SPA, it should be pretty
+            simple to implement it yourself by leveraging <a href="https://github.com/tc39/proposal-dynamic-import">dynamic
+                imports</a>.
+        </p>
+        <h3 class="topic">2) Functionality-based code splitting</h3>
+        <p> Now that we've added route-based splitting, it's time to move even further by looking at the individual
+            functionalities within a page. In terms of DevDrive, there are some scenarios which demand a simple modal.
+            I
+            haven't implemented it myself, rather I'm using the <a href="https://sweetalert2.github.io/">SweetAlert2</a>
+            library which weighs <strong>70KB</strong>.
+        </p>
+        <blockquote>The catch: I'm not showing the modal right away!</blockquote>
+        <p>
+            So I split this library from the main bundle - using dynamic imports. The dynamic import returns a <span
+                class="formatted">Promise</span> where I can use the module via the
+            <span class="formatted">default</span> property
+        </p>
+        <pre><code class="javascript">function onClick() {
+  import('../Swal.service').then(SwalService => {
+    SwalService.default(
+        /* ... */
+    );
+  });
+}</code></pre>
+        <p>
+            A good place to see it in action is the <strong>/join-team</strong> page where, if you're authenticated,
+            those
+            <strong>70KB</strong> are never sent!
+        </p>
+        <h3 class="topic">3) Component-based code splitting</h3>
+        <p> But that's not all! Thanks to my shitty phone and a poor connection I discovered that it takes quite a
+            while to load the <a href="https://microsoft.github.io/monaco-editor/">Monaco
+                Editor</a> plugin - this is what I'm using to write & edit code in the browser. It weighs <strong>2.6MB</strong>
+            which is really huge! I haven't been able to reduce it's size - I'm thinking it's a bug on their side -
+            plus, I'm
+            showing the editor straight away, unlike the SweetAlert library, so the solution above doesn't really
+            apply.
+        </p>
+        <p> Still, if we slightly adjust the first solution it will kinda help here too. So, I ended up splitting the
+            component into a separate file and showing a placeholder text while it loads. Although technically it
+            takes the same amount of time until you can use it, now the rest
+            of the page loads faster so you can start reading the exercise right away. Plus, chances are that the
+            editor is
+            fully loaded until you scroll there.
+        </p>
+        <div class="media media--side-by-side" data-loop="sync">
+            <div class="media-wrapper">
+                <video class="video--border" muted autoplay style="max-height: 550px">
+                    <source src="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/devdrive_monaco_fast.mp4"
+                        type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here is a
+                        <a href="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/devdrive_monaco_fast.mp4">link
+                            to the video</a> instead.</p>
+
+                </video>
+                <video class="video--border" muted autoplay style="max-height: 550px">
+                    <source src="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/devdrive_monaco_slow.mp4"
+                        type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here is a
+                        <a href="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/devdrive_monaco_slow.mp4">link
+                            to the video</a> instead.</p>
+
+                </video>
+
+            </div>
+            <span class="media__about">With and without lazy loading of the Monaco Editor</span>
+        </div>
+        <pre><code class="javascript">const Editor = React.lazy(() => import('./MonacoEditor.component'));
+
+class MonacoEditorLazy extends React.Component {
+    render() {
+        return (
+            &#60;React.Suspense fallback={&#60;p>Loading editor...&#60;/p>}>
+                &#60;Editor {...this.props} />
+            &#60;/React.Suspense>
+        );
+    }
+}</code></pre>
+    </section>
+    <section id="swPrecaching">
+        <h2>Service Worker precaching</h2>
+        <blockquote>You win some, you lose some.</blockquote>
+        <p> I'd say this is especially true when optimizing apps. The usual downside is that the code gets more
+            complicated and less friendly for new developers joining the team. However, in terms of
+            code-splitting there's a disadvantage to the experience itself: <strong>Waiting for the other chunk to
+                reach the app.</strong> </p>
+        <p>In terms of route-based code splitting this might be
+            neglectable but when it comes to the second scenario, most users expect instant responses.
+        </p>
+        <div class="media media--border">
+            <video class="video" muted autoplay loop style="max-height: 550px">
+                <source src="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/slow_lazy_loading.mp4" type="video/mp4">
+                <p>Your browser doesn't support HTML5 video. Here is a
+                    <a href="https://iampava.com/PICTURES/talks/javascript_fast_and_furious/slow_lazy_loading.mp4">link
+                        to the video</a> instead.</p>
+
+            </video>
+            <span class="media__about">Loading the SweetAlert library is not instant</span>
+        </div>
+        <p> As you can see above, the user has to wait quite some time for the modal to show which is definitely not
+            what he/she expects. If we have multiple functionalities like this, all of the sudden the app starts fast
+            but we have to wait every time we want to do something... Clearly not good!
+        </p>
+        <p>
+
+            I addressed this problem by downloading and caching all the chunks behind the scenes via a <a href="https://devdrive.io/service-worker.js">Service
+                Worker</a>. This way I make sure you get them instantly when you request them.
+            There's still gonna be the cost of parsing and executing the code but my assumption is that most chunks
+            will be fairly small so this is one cost I'm happy spending.
+        </p>
+        <p>
+            I used the <a href="https://www.npmjs.com/package/resources-manifest-webpack-plugin">resource-manifest-webpack-plugin</a>
+            which creates a JSON file with the names of the outputted assets. Then, from the Service Worker, I read the
+            JSON and cache
+            all the files specified there.
+        </p>
+        <pre><code class="javascript">self.addEventListener('install', function onInstall(event) {
+    event.waitUntil(caches.open('devdrive-cache')
+        .then(cache => fetch('/resources-manifest.json')
+            .then(resp => resp.json())
+            .then(jsonResp => cache.addAll(jsonResp.TO_CACHE))
+            .then(resolve)
+        )
+    );
+});</code></pre>
+    </section>
+    <section id="bestTool">
+        <h2> Best tool for the job </h2>
+        <p> Another problem I encountered, although not in DevDrive but in another project, was the size of 3rd party
+            dependencies. I needed a basic horizontal slider with touch support and stumbled upon <a href="https://idangero.us/swiper/">Swiper</a>.
+            Happy with their
+            good documentation and easy-to-use API, I quickly integrated it into the project. Later that day I
+            rememberer
+            I haven't checked the size of the library, so I quickly navigated to <a href="https://bundlephobia.com/">Bundlephobia</a>,
+            and to my shock discovered it weighs <strong>119 KB</strong>.
+        </p>
+        <figure class="media media--border">
+            <picture>
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/swiper_bundlephobia_high.webp 2000w, 
+                /dist/assets/javascript-fast-and-furious/swiper_bundlephobia_low.webp 800w"
+                    type="image/webp">
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/swiper_bundlephobia_high.jpg 2000w,
+                /dist/assets/javascript-fast-and-furious/swiper_bundlephobia_low.jpg 800w"
+                    type="image/jpeg">
+                <img class="lazyload" src="https://iampava.com/dist/assets/javascript-fast-and-furious/swiper_bundlephobia_high.jpg" alt="Swiper library on Bundlephobia">
+            </picture>
+            <noscript>
+                <img src="https://iampava.com/dist/assets/javascript-fast-and-furious/swiper_bundlephobia_high.jpg" alt="Swiper library on Bundlephobia">
+            </noscript>
+            <figcaption class="media__about">Swiper library audit on Bundlephobia</figcaption>
+        </figure>
+        <p>So although it was already up and running, I had to switch it with a smaller alternative, in this case <a
+                href="https://glidejs.com">glideJS</a> which is only <strong>23 KB </strong>.</p>
+        <figure class="media media--border">
+            <picture>
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_high.webp 2000w, 
+                /dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_low.webp 800w"
+                    type="image/webp">
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_high.jpg 2000w,
+                /dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_low.jpg 800w"
+                    type="image/jpeg">
+                <img class="lazyload" src="https://iampava.com/dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_high.jpg" alt="GlideJS library on Bundlephobia">
+            </picture>
+            <noscript>
+                <img src="https://iampava.com/dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_high.jpg" alt="GlideJS library on Bundlephobia">
+            </noscript>
+            <figcaption class="media__about">GlideJS library audit on Bundlephobia</figcaption>
+        </figure>
+        <blockquote>So, remember to double-check the size of all your dependencies!</blockquote>
+    </section>
+    <section id="ssr">
+        <h2>Server Side Rendering</h2>
+        <p> I clearly remember how big of a deal SSR was early on. I was very excited to finally
+            give it a try in the context of React and DevDrive. However, although it started and it still is just a
+            side-project, it had to be in a working version until <time datetime="2018-10-01">October 2018</time>
+            when the school year would have started
+            and with it the front-end labs I teach. So unfortunately I had to also focus on some features and didn't
+            manage to fully implement SSR the way I was envisioning it...
+        </p>
+        <p> However, I managed to add just a tiny bit of it, which shaved around <strong>200 milliseconds</strong>
+            on the start
+            time. Let me tell you how:
+        </p>
+        <p> Since some pages require the user to be authenticated, at first I basically delayed the rendering of all
+            pages
+            until I knew the status of the current user. For this I wrote a simple <strong>/ping</strong> API where I
+            would POST the <a href="https://jwt.io/">JWT</a> and get back the user info.
+        </p>
+        <blockquote>Which to be honest, doesn't make any freakin sense!</blockquote>
+        <p>
+            I mean, I just got the static files from the server and then I have to ask the same server if I'm
+            authenticated?! He should be telling me this from the very start!
+        </p>
+        <p>So that's what I did! First I <strong>moved the JWT</strong> token from localstorage to <strong>cookies</strong>
+            so it's sent
+            automatically by the
+            browser. Then, on the server side, when I receive a request for the <span class="formatted">index.html</span>
+            I also read the cookie and send the user info right there in HTML.
+        </p>
+        <pre><code class="html">&#60;body>
+    &#60;script>
+        window.__PRELOADED_STATE__ = {
+            "user": {
+                "username": "iampava",
+                "email": "pava@iampava.com",
+                "avatarUrl": "https://iampava.com/assets/images/avatars/i_avatar.png",
+                "hasFullSubscription": true,
+                "notifications": {
+                    "unread": "20",
+                    "list": null
+                }
+            }
+        }
+    &#60;/script>
+    &#60;script type="text/javascript" src="https://iampava.com/dist/devdrive.7e79696e5c8a4011ba42.js">&#60;/script>
+&#60;/body></code></pre>
+        <p> See what I did there? 😅 This allows the front-end to just read from the global <span class="formatted">__PRELOADED_STATE__</span>
+            variable and decide
+            what to do <strong>without another server request</strong>!!! In terms of actual implementations, I used
+            <a href="https://lodash.com/docs/#template">lodash templates</a> to simply parse and insert some custom
+            code in the HTML before sending it.
+        </p>
+    </section>
+    <section id="skeletonScreens">
+        <h2>Skeleton Screens</h2>
+        <p>
+            And finally a technique which is more about giving the appearance of speed. Skeleton screens are about
+            pre-rendering the UI before the actual data has come from the server. Many websites already do it, LinkedIn
+            being the first example that comes to mind. </p>
+        <figure class="media media--border">
+            <picture>
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/linkedin_high.webp 2000w, 
+                /dist/assets/javascript-fast-and-furious/linkedin_low.webp 800w"
+                    type="image/webp">
+                <source srcset="https://iampava.com/dist/assets/images/loading.png" data-srcset="https://iampava.com/dist/assets/javascript-fast-and-furious/linkedin_high.png 2000w,
+                /dist/assets/javascript-fast-and-furious/linkedin_low.png 800w"
+                    type="image/png">
+                <img class="lazyload" src="https://iampava.com/dist/assets/javascript-fast-and-furious/linkedin_high.png" alt="LinkedIn's skeleton screens">
+            </picture>
+            <noscript>
+                <img src="https://iampava.com/dist/assets/javascript-fast-and-furious/linkedin_high.png" alt="LinkedIn's skeleton screens">
+            </noscript>
+            <figcaption class="media__about">LinkedIn's skeleton screens</figcaption>
+        </figure>
+        <p>
+            Although I don't have any statistics or sciency reports that
+            this is better, it kinda makes sense for me because instead of a blank screen I see things happening on the
+            page.
+        </p>
+        <div class="media media--side-by-side" data-loop="sync">
+            <div class="media-wrapper">
+                <video class="video--border" muted autoplay>
+                    <source src="https://iampava.com/dist/assets/javascript-fast-and-furious/skeleton_screens_on.mp4" type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here is a
+                        <a href="https://iampava.com/dist/assets/javascript-fast-and-furious/skeleton_screens_on.mp4">
+                            link to the video
+                        </a>
+                        instead.
+                    </p>
+
+                </video>
+                <video class="video--border" muted autoplay>
+                    <source src="https://iampava.com/dist/assets/javascript-fast-and-furious/skeleton_screens_off.mp4" type="video/mp4">
+                    <p>Your browser doesn't support HTML5 video. Here is a
+                        <a href="https://iampava.com/dist/assets/javascript-fast-and-furious/skeleton_screens_off.mp4">
+                            link to the video
+                        </a>
+                        instead.
+                    </p>
+                </video>
+
+            </div>
+            <span class="media__about">With and without Skeleton screens</span>
+        </div>
+        <p>
+            There's not any special sauce here, you'll just have to implement the component again, but in the simpler
+            "skeleton" version.
+        </p>
+    </section>
+    <div class="dots">...</div>
+    <p> Now what? Well, let me give you a <strong>challenge</strong>! Take an idea, any idea for a
+        side project
+        you've got and build it while putting performance first. I learned so much by doing this that I must encourage
+        you to do the same! It will be a hell of a ride 🔥
+    </p>
+    <a href="https://twitter.com/aPavaloi/status/1087427870098640898" class="twitter-discuss"><i class="icon-twitter"></i>Discuss on Twitter </a>
+    <div id="bonus" class="bonus-wrapper raleway">
+        <button id="bonusBtn" class="btn crazy-ass-button"> Click for BONUS! </button>
+        <ul id="bonusList" class="bonus">
+            <li>
+                <span class="bonus__number"> 1 </span>
+                <a href="https://github.com/GoogleChrome/lighthouse#using-the-node-cli" class="bonus__heading">
+                    Lighthouse CLI
+                </a>
+                <p> Now that you have a fast app, how do you keep it fast? Well, how about integrating Lighthouse in
+                    your build
+                    process and passing or failing the production build based on custom defined metrics. </p>
+                <p>That's what I currently do at <a href="https://devdrive.io">DevDrive</a>, and I'll write about it
+                    next month.</p>
+            </li>
+            <li>
+                <span class="bonus__number"> 2 </span>
+                <a href="https://slides.com/iampava/js-fast-and-furious" class="bonus__heading"> Slides on the same topic</a>
+                <br />
+                <iframe style="max-width: 100%;" src="/slides.com/iampava/js-fast-and-furious/embed?style=light" width="576" height="420"></iframe>
+            </li>
+        </ul>
+    </div>
+    <script src="script.js"></script>
+    <!-- <script src="https://iampava.com/dist/articlePage.7cad7d9b6de025a5de00.js"></script>     -->
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BlogPosting",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "https://iampava.com/blog/offline-reading"
+            },
+            "headline": "JavaScript: the fast and the furious",
+            "image": [
+                "https://iampava.com/dist/assets/javascript-fast-and-furious/cover_max.jpg",
+                "https://iampava.com/dist/assets/javascript-fast-and-furious/swiper_bundlephobia_high.jpg",
+                "https://iampava.com/dist/assets/javascript-fast-and-furious/glidejs_bundlephobia_high.jpg"
+            ],
+            "datePublished": "2019-01-21T08:00:00+03:00",
+            "dateModified": "2019-01-21T08:00:00+03:00",
+            "author": {
+                "@type": "Person",
+                "name": "Alexandru Pavaloi"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "I AM PAVA",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://iampava.com/PICTURES/pava_icon.jpg"
+                }
+            },
+            "description": "Techniques on how to optimize the performance of JavaScript intensive client-side apps."
+        }
+    </script>
+</main>
+                <div class="after-article">
+                    <img src="https://iampava.com/PICTURES/pava_portrait.jpg" alt="Portrait of Pava" />
+                    <div>
+                        <span class="greeting raleway">hey there! </span>
+                        <p> I am Pava, a front end developer, speaker and trainer located in Iasi, Romania. If you enjoyed this, maybe we can <a href="https://iampava.com/services">work together</a>?</p>
+                    </div>
+                </div>
+        <footer>
+            <span> 👋 If you wanna say "Hi", you can find me at
+                <a class="link color--white" href="mailto:pava@iampava.com">pava@iampava.com</a>
+                or on Twitter
+                <a href="https://twitter.com/aPavaloi?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @aPavaloi</a>
+            </span>
+            <div class="blue-bar"></div>
+        </footer>
+        
+    <!-- BEGIN: STRUCTURED DATA -->
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "name": "I AM PAVA",
+            "alternateName": "Iampava",
+            "url": "https://iampava.com",
+            "logo": "https://iampava.com/PICTURES/pava_icon.jpg"
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Person",
+            "name": "Alexandru Pavaloi",
+            "url": "https://iampava.com",
+            "sameAs": [
+                "https://www.twitter.com/@aPavaloi",
+                "https://www.facebook.com/aPavaloi"
+            ]
+        }
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Blog",
+                "item": "https://iampava.com/blog"
+            }]
+        }
+    </script>
+    <!-- END: STRUCTURED DATA -->
+
+</body>
+
+</html>
