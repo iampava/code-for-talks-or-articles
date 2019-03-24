@@ -7,8 +7,8 @@ parentDirSplits.pop();
 const parentDir = parentDirSplits.join('\\');
 
 BlockingScriptsRouter.get('/bob.png', delay(500));
-BlockingScriptsRouter.get('/style.css', delay(1000));
-BlockingScriptsRouter.get('/blocking.js', delay(1500));
+BlockingScriptsRouter.get('/style.css', delay(5000));
+BlockingScriptsRouter.get('/blocking.js', delay(200));
 
 module.exports = BlockingScriptsRouter;
 

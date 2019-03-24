@@ -1,0 +1,134 @@
+@font-face {
+    font-family: 'Margarine';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/font-loading/margarine-font/margarine.woff2') format('woff2'),
+        url('/font-loading/margarine-font/margarine.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Margarine-Slow';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/font-loading/margarine-font-slow/margarine-slow.woff2') format('woff2'),
+        url('/font-loading/margarine-font-slow/margarine-slow.woff') format('woff');
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body * {
+    box-sizing: inherit;
+}
+
+.margarine {
+    font-family: 'Margarine', sans-serif;
+}
+
+.margarine-slow {
+    font-family: 'Margarine-Slow', sans-serif;
+}
+
+header {
+    text-align: center;
+    color: #1b1b15;
+    padding: 1.3em;
+    height: 80px;
+    border-bottom: 5px solid #1b1b15;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+main > div {
+    width: 100%;
+    height: calc(50vh - 40px);
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+main h2 {
+    font-size: 2.5em;
+    border-bottom: 2px dashed #1b1b15;
+}
+
+main > div:first-child {
+    background: #b6d7a8;
+}
+
+main > div:nth-child(2) {
+    background: #e06666;
+}
+
+.timer {
+    background: #1b1b15;
+    color: #fff;
+    padding: 0.5em;
+    font-size: 1.5em;
+    width: 4em;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    background: #1b1b15;
+    color: #fff;
+    padding: 1em;
+}
+
+footer p {
+    margin: 0;
+}
+
+@media screen and (min-width: 600px) {
+    main {
+        flex-flow: row nowrap;
+    }
+
+    main > div {
+        height: calc(100vh - 80px);
+    }
+}
+
+
+
+/** GitHub Fork */
+.github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+}
+
+@keyframes octocat-wave {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+    20%,
+    60% {
+        transform: rotate(-25deg);
+    }
+    40%,
+    80% {
+        transform: rotate(10deg);
+    }
+}
+
+@media (max-width: 500px) {
+    .github-corner:hover .octo-arm {
+        animation: none;
+    }
+    .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
+}
