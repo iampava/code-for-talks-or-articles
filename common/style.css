@@ -18,6 +18,7 @@ body {
     font-family: sans-serif;
     margin: 0;
     box-sizing: border-box;
+    height: 100vh;
 }
 
 body * {
@@ -30,6 +31,23 @@ body * {
 
 .margarine-slow {
     font-family: 'Margarine-Slow', sans-serif;
+}
+
+.formatted {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0 0.5em;
+    border-radius: 3px;
+    line-height: 1.25em;
+    margin: 0 0.2em;
+    text-align: center;
+    font-weight: normal;
+    color: #000;
+    background-color: #ccc;
+    border: 1px solid #aaa;
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 header {
@@ -46,11 +64,39 @@ h1 {
 
 main {
     display: flex;
-    display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+    background: #2980b9;
+    color: #fff;
+    text-align: center;
 }
 
-main > div {
+#day {
+    border-bottom: 5px solid #eb4d4b;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5em;
+}
+
+ul {
+    font-size: 1.5em;
+}
+
+ul li {
+    margin: 1em 0;
+}
+
+ul .formatted {
+    vertical-align: middle;
+}
+
+/** Font-Loading page START */
+.font-loading {
+    color: #000;
+}
+
+.font-loading > div {
     width: 100%;
     height: calc(50vh - 40px);
     display: flex;
@@ -59,20 +105,20 @@ main > div {
     align-items: center;
 }
 
-main h2 {
+.font-loading h2 {
     font-size: 2.5em;
     border-bottom: 2px dashed #1b1b15;
 }
 
-main > div:first-child {
+.font-loading > div:first-child {
     background: #b6d7a8;
 }
 
-main > div:nth-child(2) {
+.font-loading > div:nth-child(2) {
     background: #e06666;
 }
 
-.timer {
+.font-loading .timer {
     background: #1b1b15;
     color: #fff;
     padding: 0.5em;
@@ -80,6 +126,7 @@ main > div:nth-child(2) {
     width: 4em;
     text-align: center;
 }
+/** Font-Loading page END */
 
 footer {
     text-align: center;
@@ -93,16 +140,14 @@ footer p {
 }
 
 @media screen and (min-width: 600px) {
-    main {
+    .font-loading {
         flex-flow: row nowrap;
     }
 
-    main > div {
+    .font-loading > div {
         height: calc(100vh - 80px);
     }
 }
-
-
 
 /** GitHub Fork */
 .github-corner:hover .octo-arm {
