@@ -1,0 +1,35 @@
+{
+    "name": "a-common-sense-guide-to-loading-images-on-the-web",
+    "version": "1.0.0",
+    "author": {
+        "name": "Alexandru Pavaloi",
+        "email": "pava@iampava.com",
+        "url": "https://iampava.com"
+    },
+    "scripts": {
+        "webpack": "webpack",
+        "webpack-dev-server": "webpack-dev-server",
+        "resize-images": "node build-utils/resize-images.js",
+        "dev": "npm run webpack-dev-server -- --env.mode development",
+        "prod": "npm run clear && npm run webpack -- --env.mode production",
+        "clear": "rm -rf dist/"
+    },
+    "devDependencies": {
+        "copy-webpack-plugin": "^4.6.0",
+        "css-loader": "^1.0.1",
+        "html-webpack-plugin": "^3.2.0",
+        "imagemin-webp-webpack-plugin": "^1.0.2",
+        "imagemin-webpack-plugin": "^2.4.2",
+        "mini-css-extract-plugin": "^0.4.4",
+        "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "sharp": "^0.21.0",
+        "style-loader": "^0.23.1",
+        "webpack": "^4.18.1",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.9.0",
+        "webpack-merge": "^4.1.4"
+    },
+    "dependencies": {
+        "lazysizes": "^4.1.4"
+    }
+}

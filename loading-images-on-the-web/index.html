@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Loading images on the Web - Demo</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+
+<body>
+    <a href="https://github.com/iampava/loading-images"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+            alt="Fork me on GitHub"></a>
+    <main>
+        <h1>Loading images on The Web </h1>
+        <p class="bold">Hi,</p>
+        <p>this is a simple demo of the techniques I describe in my <a href="https://iampava.com/blog/loading-images-on-the-web">article</a> regarding performantly
+            loading images on The Web!</p>
+        <br />
+        <p> Feel free to inspect the code and if you wanna say `Hi!` you can find me on <a href="https://twitter.com/aPavaloi">Twitter</a>.
+        </p>
+        <br /> 
+        <p class="center">...</p>
+        <br/>
+        <h3> #1 Via HTML</h3>
+        <picture>
+            <source class="lazyload" data-srcset="images/bike_low.webp  800w,
+                            images/bike_med.webp 2000w,
+                            images/bike_max.webp 4000w"
+                type="image/webp" />
+
+            <source class="lazyload" data-srcset="images/bike_low.jpg   800w,
+                            images/bike_med.jpg  2000w,
+                            images/bike_max.jpg  4000w"
+                type="image/jpeg" />
+            <noscript> <img src="images/bike_med.jpg" alt="red bike" /> </noscript>
+            <img class="lazyload" data-src="images/bike_med.jpg" alt="red bike" />
+        </picture>
+
+        <h3>#2 Via CSS</h3>
+        <div id="backgroundImage"></div>
+        <br>
+    </main>
+</body>
+
+</html>
