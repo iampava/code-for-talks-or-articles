@@ -1,0 +1,10 @@
+{
+    "short_name": "Dev v Dev",
+    "name": "Dev v Dev",
+    "scope": ".",
+    "start_url": ".",
+    "display": "standalone",
+    "orientation": "portrait",
+    "gcm_sender_id": "103953800507",
+    "icons": []
+}

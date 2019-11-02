@@ -1,0 +1,208 @@
+@import "forms.css";
+@import "user-stats.css";
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+}
+
+a {
+    color: #000;
+    border-bottom: 1px solid #000;
+}
+
+
+header {
+    text-align: center;
+    padding: 1em 0;
+    font-size: calc(12px + 1vw);
+    border-bottom: 5px solid #f7df1e;
+    box-sizing: border-box;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+header button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: .5em;
+    font-size: 1em;
+    background-color: #fff;
+    cursor: pointer;
+    border: 1px solid silver;
+    border-radius: 5px;
+    padding: .25em .5em;
+    transition: transform .25s ease-in-out;
+}
+
+header button:hover {
+    transform: translateY(-50%) scale(1.25);
+}
+
+main {
+    padding: 1em 1em 2em 1em;
+    min-height: calc(100% - 9.5em);
+}
+
+.controls {
+    display: flex;
+    margin-top: 5em;
+}
+
+.controls form {
+    flex: 1;
+    text-align: center;
+}
+
+/* .controls form input,
+.controls form button {
+    margin: .4em 0;
+} */
+#results {
+    margin-top: 5em;
+    display: flex;
+}
+
+#results .results__dev1,
+#results .results__dev2 {
+    flex: 1;
+    max-width: 40%;
+    margin: 0 5em;
+}
+
+#results .results__dev1 .user-stats {
+    border-color: #e53935;
+}
+
+#results .results__dev2 .user-stats {
+    border-color: #1e88e5;
+}
+
+#results .final-result {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.final-result button {
+    background-color: #000;
+    color: #fff;
+    border: 0;
+    font-weight: bold;
+    padding: .25em 1em;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.final-result button:hover {
+    box-shadow: 0 0 5px grey;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.dots:before {
+    content: '...';
+    margin: 2em 0;
+    display: block;
+}
+
+.previous-results-wrapper {
+    text-align: center;
+}
+
+.warning {
+    background-color: #e53935;
+    color: #fff;
+    padding: 1em;
+    margin: 0;
+    line-height: 1.75em;
+}
+
+.previous-results-wrapper li p {
+    display: inline-block;
+    color: gray;
+}
+
+.previous-results-wrapper li .score {
+    font-size: 1.25em;
+    color: #000;
+    border-bottom: 1px solid #000;
+}
+
+footer {
+    border-top: 2px solid #1e88e5;
+    padding: 1em 0;
+    text-align: center;
+    font-size: 12px;
+}
+
+footer .heart {
+    font-size: 18px;
+    color: #e53935;
+}
+
+@media screen and (max-width: 850px) {
+    .controls {
+        display: block;
+    }
+
+    .controls form {
+        margin: 2em 0;
+    }
+
+    .controls form:first-child {
+        text-align: left;
+    }
+
+    .controls form:nth-child(2) {
+        text-align: right;
+    }
+
+    #results {
+        display: block;
+    }
+
+    #results .results__dev1,
+    #results .results__dev2 {
+        flex: 1;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    #results .final-result {
+        position: static;
+        transform: none;
+        text-align: center;
+        margin-top: 3em;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    header{
+        text-align: right;
+        padding-bottom: .5em;
+    }
+    header button {
+        position: static;
+        display: inline-block;
+        transform: none;
+        margin: .5em .5em 0 0;
+    }
+    .controls form .form-input,
+    .controls form button {
+        margin-bottom: .75em;
+    }
+}
